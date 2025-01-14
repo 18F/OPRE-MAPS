@@ -10,6 +10,7 @@ import {
 import { useTableRow } from "../../UI/TableRowExpandable/TableRowExpandable.hooks";
 import { NO_DATA } from "../../../constants";
 import TableRowExpandable from "../../UI/TableRowExpandable";
+import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
 
 /**
  * @typedef {import("../../../components/CANs/CANTypes").FundingReceived} FundingReceived
@@ -122,6 +123,16 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
                 style={bgExpandedStyles}
             >
                 {calculatePercent(funding, totalFunding)}%
+            </td>
+            <td>
+                <ChangeIcons
+                    handleDeleteItem={() => {}}
+                    handleSetItemForEditing={() => {}}
+                    handleDuplicateItem={() => {}}
+                    isItemEditable={true}
+                    isItemDeletable={true}
+                    duplicateIcon={true}
+                />
             </td>
         </>
     );
