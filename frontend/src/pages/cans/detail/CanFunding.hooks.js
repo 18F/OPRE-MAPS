@@ -248,6 +248,10 @@ export default function useCanFunding(
         suite({ remainingAmount: +budgetForm.submittedAmount - totalReceived, ...{ [name]: value } }, name);
     };
 
+    const handleEditFundingReceived = (rowId) => {
+        alert("Edit Funding Received: " + rowId);
+    };
+
     return {
         handleAddBudget,
         handleAddFundingReceived,
@@ -266,6 +270,7 @@ export default function useCanFunding(
         handleEnteredFundingReceivedAmount,
         handleEnteredNotes,
         totalReceived,
-        enteredFundingReceived
+        enteredFundingReceived,
+        handleEditFundingReceived
     };
 }
