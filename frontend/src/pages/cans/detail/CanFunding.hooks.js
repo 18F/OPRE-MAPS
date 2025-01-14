@@ -203,7 +203,17 @@ export default function useCanFunding(
             funding: +fundingReceivedForm.enteredAmount,
             fiscal_year: fiscalYear
         };
-        setEnteredFundingReceived([...enteredFundingReceived, newFundingReceived]);
+
+        console.log({ enteredFundingReceived });
+
+        // Check if we are editing an existing funding received
+        if (fundingReceivedForm.isEditing) {
+            // Overwrite the existing funding received in enteredFundingReceived with the new data
+        } else {
+            // Add the new funding received
+            setEnteredFundingReceived([...enteredFundingReceived, newFundingReceived]);
+        }
+
         // Then update the form state
         const nextForm = {
             ...fundingReceivedForm,
