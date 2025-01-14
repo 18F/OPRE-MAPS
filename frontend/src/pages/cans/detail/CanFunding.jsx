@@ -218,6 +218,7 @@ const CanFunding = ({
                                     receivedFundingAmount={fundingReceivedForm.enteredAmount}
                                     setReceivedFundingAmount={handleEnteredFundingReceivedAmount}
                                     handleSubmit={handleAddFundingReceived}
+                                    isEditing={fundingReceivedForm.isEditing}
                                     setNotes={handleEnteredNotes}
                                     notes={fundingReceivedForm.enteredNotes}
                                     cn={cn}

@@ -8,6 +8,7 @@ import icons from "../../../uswds/img/sprite.svg";
  * @property {Object} res
  * @property {string} receivedFundingAmount
  * @property {(e: React.FormEvent<HTMLFormElement>) => void} handleSubmit
+ * @property {boolean} isEditing
  * @property {(name: string, value: string) => void} runValidate
  * @property { React.Dispatch<React.SetStateAction<string>>} setReceivedFundingAmount
  * @property {string} notes
@@ -25,6 +26,7 @@ const CANFundingReceivedForm = ({
     res,
     runValidate,
     handleSubmit,
+    isEditing,
     receivedFundingAmount,
     setReceivedFundingAmount,
     notes,
@@ -71,7 +73,7 @@ const CANFundingReceivedForm = ({
                 >
                     <use xlinkHref={`${icons}#add`}></use>
                 </svg>
-                Add Funding Received
+                {isEditing ? "Edit Funding Received" : "Add Funding Received"}
             </button>
         </form>
     );

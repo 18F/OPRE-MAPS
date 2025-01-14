@@ -211,7 +211,8 @@ export default function useCanFunding(
             submittedAmount: fundingReceivedForm.enteredAmount,
             enteredNotes: "",
             submittedNotes: fundingReceivedForm.enteredNotes,
-            isSubmitted: true
+            isSubmitted: true,
+            isEditing: false
         };
         setFundingReceivedForm(nextForm);
     };
