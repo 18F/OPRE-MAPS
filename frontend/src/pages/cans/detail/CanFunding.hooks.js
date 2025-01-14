@@ -64,7 +64,8 @@ export default function useCanFunding(
         enteredNotes: "",
         submittedNotes: "",
         isSubmitted: false,
-        isEditing: false
+        isEditing: false,
+        id: null
     });
 
     const [addCanFundingBudget] = useAddCanFundingBudgetsMutation();
@@ -194,7 +195,7 @@ export default function useCanFunding(
 
         // update the table data
         const newFundingReceived = {
-            id: NO_DATA,
+            id: fundingReceivedForm.id ?? NO_DATA,
             created_on: new Date().toISOString(),
             created_by_user: {
                 full_name: activeUserFullName
@@ -204,11 +205,13 @@ export default function useCanFunding(
             fiscal_year: fiscalYear
         };
 
-        console.log({ enteredFundingReceived });
-
         // Check if we are editing an existing funding received
         if (fundingReceivedForm.isEditing) {
             // Overwrite the existing funding received in enteredFundingReceived with the new data
+            const updatedFundingReceived = enteredFundingReceived.map((f) =>
+                f.id === fundingReceivedForm.id ? newFundingReceived : f
+            );
+            setEnteredFundingReceived(updatedFundingReceived);
         } else {
             // Add the new funding received
             setEnteredFundingReceived([...enteredFundingReceived, newFundingReceived]);
@@ -222,7 +225,8 @@ export default function useCanFunding(
             enteredNotes: "",
             submittedNotes: fundingReceivedForm.enteredNotes,
             isSubmitted: true,
-            isEditing: false
+            isEditing: false,
+            id: null
         };
         setFundingReceivedForm(nextForm);
     };
@@ -269,7 +273,8 @@ export default function useCanFunding(
         const nextForm = {
             enteredAmount: funding,
             enteredNotes: notes,
-            isEditing: true
+            isEditing: true,
+            id: fundingReceivedId
         };
 
         setFundingReceivedForm(nextForm);
