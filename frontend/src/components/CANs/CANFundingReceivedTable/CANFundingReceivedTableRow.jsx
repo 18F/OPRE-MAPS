@@ -29,7 +29,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  */
 
 const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
-    const { isExpanded, setIsExpanded, setIsRowActive } = useTableRow();
+    const { isRowActive, isExpanded, setIsExpanded, setIsRowActive } = useTableRow();
     const borderExpandedStyles = removeBorderBottomIfExpanded(isExpanded);
     const bgExpandedStyles = changeBgColorIfExpanded(isExpanded);
 
@@ -125,14 +125,16 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
                 {calculatePercent(funding, totalFunding)}%
             </td>
             <td>
-                <ChangeIcons
-                    handleDeleteItem={() => {}}
-                    handleSetItemForEditing={() => {}}
-                    handleDuplicateItem={() => {}}
-                    isItemEditable={true}
-                    isItemDeletable={true}
-                    duplicateIcon={true}
-                />
+                {isRowActive && (
+                    <ChangeIcons
+                        handleDeleteItem={() => {}}
+                        handleSetItemForEditing={() => {}}
+                        handleDuplicateItem={() => {}}
+                        isItemEditable={true}
+                        isItemDeletable={true}
+                        duplicateIcon={true}
+                    />
+                )}
             </td>
         </>
     );
