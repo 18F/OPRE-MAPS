@@ -209,16 +209,20 @@ export default function useCanFunding(
         // Check if we are editing an existing funding received
         if (fundingReceivedForm.isEditing) {
             // Overwrite the existing funding received in enteredFundingReceived with the new data
-            const matchingFundingReceived = enteredFundingReceived.find(
-                (fundingEntry) => fundingEntry.id === fundingReceivedForm.id
-            );
+            const matchingFundingReceived = enteredFundingReceived.find((fundingEntry) => {
+                if (fundingReceivedForm.id.toString() === NO_DATA) {
+                    //new funding received
+                    return fundingEntry.tempId === fundingReceivedForm.tempId;
+                }
+                return fundingEntry.id === fundingReceivedForm.id;
+            });
             const matchingFundingReceivedFunding = +matchingFundingReceived?.funding || 0;
             setTotalReceived(
                 (currentTotal) => currentTotal - matchingFundingReceivedFunding + +fundingReceivedForm.enteredAmount
             );
 
             const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) =>
-                fundingEntry.id === fundingReceivedForm.id
+                fundingEntry.id === fundingReceivedForm.id || fundingEntry.tempId === fundingReceivedForm.tempId
                     ? { ...matchingFundingReceived, ...newFundingReceived }
                     : fundingEntry
             );
@@ -278,9 +282,9 @@ export default function useCanFunding(
 
     const handleEditFundingReceived = (fundingReceivedId) => {
         let matchingFundingReceived;
-        if(fundingReceivedId.toString().includes("temp")){
+        if (fundingReceivedId.toString().includes("temp")) {
             matchingFundingReceived = enteredFundingReceived.find((f) => f.tempId === fundingReceivedId);
-        }else{
+        } else {
             matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
         }
         //const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
