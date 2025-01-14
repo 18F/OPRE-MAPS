@@ -202,7 +202,10 @@ const CanFunding = ({
                             />
                         </div>
                     </section>
-                    <section id="can-funding-received-form-section" className="margin-bottom-4">
+                    <section
+                        id="can-funding-received-form-section"
+                        className="margin-bottom-4"
+                    >
                         <h2>{`Add FY ${fiscalYear} Funding Received YTD`}</h2>
                         <p>{`Add funding received towards the Total FY ${fiscalYear} Budget or come back to add funding later. Funding Received means the money is in OPRE’s hands and ready to spend against.`}</p>
                         <div className="display-flex flex-justify margin-top-4">
@@ -240,6 +243,7 @@ const CanFunding = ({
                     <CANFundingReceivedTable
                         fundingReceived={enteredFundingReceived}
                         totalFunding={totalFunding}
+                        isEditMode={isEditMode}
                     />
                 )}
             </Accordion>

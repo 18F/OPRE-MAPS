@@ -20,6 +20,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  * @typedef {Object} CANFundingReceivedTableRowProps
  * @property {string} totalFunding
  * @property {FundingReceived} fundingReceived data for table
+ * @property {boolean} isEditMode for if we're in edit mode
  */
 
 /**
@@ -28,7 +29,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  * @returns  {JSX.Element} - The component JSX.
  */
 
-const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
+const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode }) => {
     const { isRowActive, isExpanded, setIsExpanded, setIsRowActive } = useTableRow();
     const borderExpandedStyles = removeBorderBottomIfExpanded(isExpanded);
     const bgExpandedStyles = changeBgColorIfExpanded(isExpanded);
@@ -124,8 +125,8 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
             >
                 {calculatePercent(funding, totalFunding)}%
             </td>
-            <td>
-                {isRowActive && (
+            {isRowActive && isEditMode && (
+                <td>
                     <ChangeIcons
                         handleDeleteItem={() => {}}
                         handleSetItemForEditing={() => {}}
@@ -134,8 +135,8 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding }) => {
                         isItemDeletable={true}
                         duplicateIcon={true}
                     />
-                )}
-            </td>
+                </td>
+            )}
         </>
     );
     return (
