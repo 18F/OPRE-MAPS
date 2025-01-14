@@ -63,7 +63,8 @@ export default function useCanFunding(
         submittedAmount: "",
         enteredNotes: "",
         submittedNotes: "",
-        isSubmitted: false
+        isSubmitted: false,
+        isEditing: false
     });
 
     const [addCanFundingBudget] = useAddCanFundingBudgetsMutation();
@@ -252,6 +253,15 @@ export default function useCanFunding(
         alert("Edit Funding Received: " + fundingReceivedId);
         const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
         console.log({ matchingFundingReceived });
+
+        const { funding, notes } = matchingFundingReceived;
+        const nextForm = {
+            enteredAmount: funding,
+            enteredNotes: notes,
+            isEditing: true
+        };
+
+        setFundingReceivedForm(nextForm);
     };
 
     return {
