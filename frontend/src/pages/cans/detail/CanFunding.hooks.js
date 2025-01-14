@@ -191,7 +191,6 @@ export default function useCanFunding(
         e.preventDefault();
 
         // Update total received first using the functional update pattern
-        setTotalReceived((currentTotal) => currentTotal + +fundingReceivedForm.enteredAmount);
 
         // update the table data
         const newFundingReceived = {
@@ -208,12 +207,23 @@ export default function useCanFunding(
         // Check if we are editing an existing funding received
         if (fundingReceivedForm.isEditing) {
             // Overwrite the existing funding received in enteredFundingReceived with the new data
-            const updatedFundingReceived = enteredFundingReceived.map((f) =>
-                f.id === fundingReceivedForm.id ? newFundingReceived : f
+            const matchingFundingReceived = enteredFundingReceived.find(
+                (fundingEntry) => fundingEntry.id === fundingReceivedForm.id
+            );
+            const matchingFundingReceivedFunding = +matchingFundingReceived?.funding || 0;
+            setTotalReceived(
+                (currentTotal) => currentTotal - matchingFundingReceivedFunding + +fundingReceivedForm.enteredAmount
+            );
+
+            const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) =>
+                fundingEntry.id === fundingReceivedForm.id
+                    ? { ...matchingFundingReceived, ...newFundingReceived }
+                    : fundingEntry
             );
             setEnteredFundingReceived(updatedFundingReceived);
         } else {
             // Add the new funding received
+            setTotalReceived((currentTotal) => currentTotal + +fundingReceivedForm.enteredAmount);
             setEnteredFundingReceived([...enteredFundingReceived, newFundingReceived]);
         }
 
@@ -265,9 +275,7 @@ export default function useCanFunding(
     };
 
     const handleEditFundingReceived = (fundingReceivedId) => {
-        alert("Edit Funding Received: " + fundingReceivedId);
         const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
-        console.log({ matchingFundingReceived });
 
         const { funding, notes } = matchingFundingReceived;
         const nextForm = {

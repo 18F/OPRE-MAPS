@@ -10,7 +10,7 @@ import CANFundingReceivedTableRow from "./CANFundingReceivedTableRow";
  * @property {string} totalFunding
  * @property {FundingReceived[]} fundingReceived data for table
  * @property {boolean} isEditMode for if we're in edit mode
- * @property {() => {}} handleEditFundingReceived function for editing funding received
+ * @property {(id: number) => void} handleEditFundingReceived function for editing funding received
  */
 
 /**

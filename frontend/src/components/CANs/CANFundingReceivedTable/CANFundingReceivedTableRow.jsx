@@ -21,7 +21,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  * @property {string} totalFunding
  * @property {FundingReceived} fundingReceived data for table
  * @property {boolean} isEditMode for if we're in edit mode
- * @property {() => {}} handleEditFundingReceived function for editing funding received
+ * @property {(id: number) => void} handleEditFundingReceived function for editing funding received
  */
 
 /**
@@ -136,14 +136,13 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
                         handleSetItemForEditing={() => {
                             handleEditFundingReceived(rowId);
                         }}
-                        handleDuplicateItem={() => {}}
                         isItemEditable={true}
                         isItemDeletable={true}
-                        duplicateIcon={true}
+                        duplicateIcon={false}
                     />
                 </td>
             ) : (
-                <td width="132px"></td>
+                <td width="113px"></td> // empty cell to maintain alignment
             )}
         </>
     );
