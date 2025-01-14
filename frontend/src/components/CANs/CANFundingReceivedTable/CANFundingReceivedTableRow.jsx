@@ -125,8 +125,11 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode 
             >
                 {calculatePercent(funding, totalFunding)}%
             </td>
-            {isRowActive && isEditMode && (
-                <td>
+            {isRowActive && isEditMode ? (
+                <td
+                    className={borderExpandedStyles}
+                    style={bgExpandedStyles}
+                >
                     <ChangeIcons
                         handleDeleteItem={() => {}}
                         handleSetItemForEditing={() => {}}
@@ -136,6 +139,8 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode 
                         duplicateIcon={true}
                     />
                 </td>
+            ) : (
+                <td width="132px"></td>
             )}
         </>
     );
