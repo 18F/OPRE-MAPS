@@ -86,13 +86,14 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
     /**
      * @component TableRowData component renders a table row
      * @param {Object} props - The properties object.
-     * @param {number} props.rowId - The identifier for the row.
+     * @param {number} props.rowId - The label of the row.
      * @param {number} props.fiscalYear - The fiscal year for the funding data.
      * @param {number} [props.funding] - The amount of funding received.
+     * @param {string} [props.tempId] - The temp ID of unsaved funding received.
      * @param {number} props.totalFunding - The total funding available.
      * @returns {JSX.Element} The rendered table row data.
      */
-    const TableRowData = ({ rowId, fiscalYear, funding = 0, totalFunding }) => (
+    const TableRowData = ({ rowId, fiscalYear, funding = 0, totalFunding, tempId}) => (
         <>
             <th
                 scope="row"
@@ -134,7 +135,8 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
                     <ChangeIcons
                         handleDeleteItem={() => {}}
                         handleSetItemForEditing={() => {
-                            handleEditFundingReceived(rowId);
+                            const tempRowId = rowId.toString() === NO_DATA ? tempId : rowId;
+                            handleEditFundingReceived(tempRowId);
                         }}
                         isItemEditable={true}
                         isItemDeletable={true}
@@ -151,6 +153,7 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
             tableRowData={
                 <TableRowData
                     rowId={fundingReceived.id}
+                    tempId={fundingReceived.tempId}
                     fiscalYear={fundingReceived.fiscal_year}
                     funding={fundingReceived.funding}
                     totalFunding={+totalFunding}

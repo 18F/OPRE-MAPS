@@ -10,6 +10,7 @@ import suite from "./CanFundingSuite.js";
 import classnames from "vest/classnames";
 import { NO_DATA } from "../../../constants.js";
 import { useSelector } from "react-redux";
+import cryptoRandomString from "crypto-random-string";
 
 /**
  * @typedef {import("../../../components/CANs/CANTypes").FundingReceived} FundingReceived
@@ -195,6 +196,7 @@ export default function useCanFunding(
         // update the table data
         const newFundingReceived = {
             id: fundingReceivedForm.id ?? NO_DATA,
+            tempId: `temp-${cryptoRandomString({ length: 3 })}`,
             created_on: new Date().toISOString(),
             created_by_user: {
                 full_name: activeUserFullName
@@ -275,7 +277,13 @@ export default function useCanFunding(
     };
 
     const handleEditFundingReceived = (fundingReceivedId) => {
-        const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
+        let matchingFundingReceived;
+        if(fundingReceivedId.toString().includes("temp")){
+            matchingFundingReceived = enteredFundingReceived.find((f) => f.tempId === fundingReceivedId);
+        }else{
+            matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
+        }
+        //const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
 
         const { funding, notes } = matchingFundingReceived;
         const nextForm = {
