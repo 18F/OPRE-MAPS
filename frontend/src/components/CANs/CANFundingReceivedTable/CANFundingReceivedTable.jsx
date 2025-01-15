@@ -10,7 +10,7 @@ import CANFundingReceivedTableRow from "./CANFundingReceivedTableRow";
  * @property {string} totalFunding
  * @property {FundingReceived[]} fundingReceived data for table
  * @property {boolean} isEditMode for if we're in edit mode
- * @property {(id: number) => void} handleEditFundingReceived function for editing funding received
+ * @property {(id: number) => void} populateFundingReceivedForm function for editing funding received
  */
 
 /**
@@ -18,7 +18,7 @@ import CANFundingReceivedTableRow from "./CANFundingReceivedTableRow";
  * @param {CANFundingReceivedTableProps} props
  * @returns  {JSX.Element} - The component JSX.
  */
-const CANFundingReceivedTable = ({ fundingReceived, totalFunding, isEditMode, handleEditFundingReceived }) => {
+const CANFundingReceivedTable = ({ fundingReceived, totalFunding, isEditMode, populateFundingReceivedForm }) => {
     return (
         <Table tableHeadings={["Funding ID", "FY", "Funding Received", "% of Total FY Budget", " "]}>
             {fundingReceived.map((fundingRow) => {
@@ -28,7 +28,7 @@ const CANFundingReceivedTable = ({ fundingReceived, totalFunding, isEditMode, ha
                         fundingReceived={fundingRow}
                         totalFunding={totalFunding}
                         isEditMode={isEditMode}
-                        handleEditFundingReceived={handleEditFundingReceived}
+                        populateFundingReceivedForm={populateFundingReceivedForm}
                     />
                 );
             })}

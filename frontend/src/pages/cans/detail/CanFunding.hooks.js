@@ -289,7 +289,7 @@ export default function useCanFunding(
         suite({ remainingAmount: +budgetForm.submittedAmount - totalReceived, ...{ [name]: value } }, name);
     };
 
-    const handleEditFundingReceived = (fundingReceivedId) => {
+    const populateFundingReceivedForm = (fundingReceivedId) => {
         let matchingFundingReceived;
         if (fundingReceivedId.toString().includes("temp")) {
             matchingFundingReceived = enteredFundingReceived.find((f) => f.tempId === fundingReceivedId);
@@ -328,6 +328,6 @@ export default function useCanFunding(
         handleEnteredNotes,
         totalReceived,
         enteredFundingReceived,
-        handleEditFundingReceived
+        populateFundingReceivedForm
     };
 }

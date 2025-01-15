@@ -76,7 +76,7 @@ const CanFunding = ({
         handleEnteredNotes,
         totalReceived,
         enteredFundingReceived,
-        handleEditFundingReceived
+        populateFundingReceivedForm
     } = useCanFunding(
         canId,
         canNumber,
@@ -247,7 +247,7 @@ const CanFunding = ({
                         fundingReceived={enteredFundingReceived}
                         totalFunding={totalFunding}
                         isEditMode={isEditMode}
-                        handleEditFundingReceived={handleEditFundingReceived}
+                        populateFundingReceivedForm={populateFundingReceivedForm}
                     />
                 )}
             </Accordion>

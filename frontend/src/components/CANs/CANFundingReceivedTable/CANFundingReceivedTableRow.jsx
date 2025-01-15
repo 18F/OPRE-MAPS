@@ -21,7 +21,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  * @property {string} totalFunding
  * @property {FundingReceived} fundingReceived data for table
  * @property {boolean} isEditMode for if we're in edit mode
- * @property {(id: number) => void} handleEditFundingReceived function for editing funding received
+ * @property {(id: number) => void} populateFundingReceivedForm function for editing funding received
  */
 
 /**
@@ -30,7 +30,7 @@ import ChangeIcons from "../../BudgetLineItems/ChangeIcons";
  * @returns  {JSX.Element} - The component JSX.
  */
 
-const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode, handleEditFundingReceived }) => {
+const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode, populateFundingReceivedForm }) => {
     const { isRowActive, isExpanded, setIsExpanded, setIsRowActive } = useTableRow();
     const borderExpandedStyles = removeBorderBottomIfExpanded(isExpanded);
     const bgExpandedStyles = changeBgColorIfExpanded(isExpanded);
@@ -93,7 +93,7 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
      * @param {number} props.totalFunding - The total funding available.
      * @returns {JSX.Element} The rendered table row data.
      */
-    const TableRowData = ({ rowId, fiscalYear, funding = 0, totalFunding, tempId}) => (
+    const TableRowData = ({ rowId, fiscalYear, funding = 0, totalFunding, tempId }) => (
         <>
             <th
                 scope="row"
@@ -136,7 +136,7 @@ const CANFundingReceivedTableRow = ({ fundingReceived, totalFunding, isEditMode,
                         handleDeleteItem={() => {}}
                         handleSetItemForEditing={() => {
                             const tempRowId = rowId.toString() === NO_DATA ? tempId : rowId;
-                            handleEditFundingReceived(tempRowId);
+                            populateFundingReceivedForm(tempRowId);
                         }}
                         isItemEditable={true}
                         isItemDeletable={true}
