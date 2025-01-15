@@ -64,15 +64,9 @@ const CANFundingReceivedForm = ({
                     textAreaStyle={{ height: "51px" }}
                 />{" "}
             </div>
-            <div className={"display-flex flex-justify"}>
+            <div className="display-flex flex-justify margin-top-4">
                 <button
-                    className="usa-button usa-button--unstyled margin-top-2 margin-right-2"
-                    onClick={cancelFundingReceived}
-                >
-                    Cancel
-                </button>
-                <button
-                    className="usa-button usa-button--outline margin-top-4"
+                    className="usa-button usa-button--outline "
                     disabled={isFormInValid}
                     data-cy="add-funding-received-btn"
                 >
@@ -86,6 +80,12 @@ const CANFundingReceivedForm = ({
                     )}
 
                     {isEditing ? "Update Funding Received" : "Add Funding Received"}
+                </button>
+                <button
+                    className="usa-button usa-button--unstyled  margin-right-7"
+                    onClick={cancelFundingReceived}
+                >
+                    Cancel
                 </button>
             </div>
         </form>

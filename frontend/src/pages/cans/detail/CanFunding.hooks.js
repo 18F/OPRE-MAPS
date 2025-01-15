@@ -59,7 +59,7 @@ export default function useCanFunding(
         isSubmitted: false
     });
 
-    const [fundingReceivedForm, setFundingReceivedForm] = React.useState({
+    const initialFundingReceivedForm = {
         enteredAmount: "",
         submittedAmount: "",
         enteredNotes: "",
@@ -68,7 +68,9 @@ export default function useCanFunding(
         isEditing: false,
         id: null,
         tempId: null
-    });
+    };
+
+    const [fundingReceivedForm, setFundingReceivedForm] = React.useState(initialFundingReceivedForm);
 
     const [addCanFundingBudget] = useAddCanFundingBudgetsMutation();
     const [updateCanFundingBudget] = useUpdateCanFundingBudgetMutation();
@@ -261,7 +263,7 @@ export default function useCanFunding(
     };
 
     const cancelFundingReceived = () => {
-        alert("cancel from cancelFundingReceived");
+        setFundingReceivedForm(initialFundingReceivedForm);
     };
 
     const handleCancel = () => {
