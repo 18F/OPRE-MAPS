@@ -66,7 +66,8 @@ export default function useCanFunding(
         submittedNotes: "",
         isSubmitted: false,
         isEditing: false,
-        id: null
+        id: null,
+        tempId: null
     });
 
     const [addCanFundingBudget] = useAddCanFundingBudgetsMutation();
@@ -196,7 +197,7 @@ export default function useCanFunding(
         // update the table data
         const newFundingReceived = {
             id: fundingReceivedForm.id ?? NO_DATA,
-            tempId: `temp-${cryptoRandomString({ length: 3 })}`,
+            tempId: fundingReceivedForm.tempId ?? `temp-${cryptoRandomString({ length: 3 })}`,
             created_on: new Date().toISOString(),
             created_by_user: {
                 full_name: activeUserFullName
@@ -210,22 +211,29 @@ export default function useCanFunding(
         if (fundingReceivedForm.isEditing) {
             // Overwrite the existing funding received in enteredFundingReceived with the new data
             const matchingFundingReceived = enteredFundingReceived.find((fundingEntry) => {
-                if (fundingReceivedForm.id.toString() === NO_DATA) {
+                if (newFundingReceived.id === NO_DATA) {
                     //new funding received
-                    return fundingEntry.tempId === fundingReceivedForm.tempId;
+                    return fundingEntry.tempId === newFundingReceived.tempId;
                 }
-                return fundingEntry.id === fundingReceivedForm.id;
+                return fundingEntry.id.toString() === newFundingReceived.id.toString(); // TODO: can we update the id type from number to string, then no need to convert?
             });
+
             const matchingFundingReceivedFunding = +matchingFundingReceived?.funding || 0;
             setTotalReceived(
                 (currentTotal) => currentTotal - matchingFundingReceivedFunding + +fundingReceivedForm.enteredAmount
             );
 
-            const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) =>
-                fundingEntry.id === fundingReceivedForm.id || fundingEntry.tempId === fundingReceivedForm.tempId
-                    ? { ...matchingFundingReceived, ...newFundingReceived }
-                    : fundingEntry
-            );
+            const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) => {
+                if (fundingEntry.id.toString() === NO_DATA) {
+                    return fundingEntry.tempId === newFundingReceived.tempId
+                        ? { ...matchingFundingReceived, ...newFundingReceived }
+                        : fundingEntry;
+                } else {
+                    return fundingEntry.id.toString() === newFundingReceived.id.toString()
+                        ? { ...matchingFundingReceived, ...newFundingReceived }
+                        : fundingEntry;
+                }
+            });
             setEnteredFundingReceived(updatedFundingReceived);
         } else {
             // Add the new funding received
@@ -242,7 +250,8 @@ export default function useCanFunding(
             submittedNotes: fundingReceivedForm.enteredNotes,
             isSubmitted: true,
             isEditing: false,
-            id: null
+            id: null,
+            tempId: null
         };
         setFundingReceivedForm(nextForm);
     };
@@ -287,14 +296,14 @@ export default function useCanFunding(
         } else {
             matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
         }
-        //const matchingFundingReceived = enteredFundingReceived.find((f) => f.id === fundingReceivedId);
 
         const { funding, notes } = matchingFundingReceived;
         const nextForm = {
             enteredAmount: funding,
             enteredNotes: notes,
             isEditing: true,
-            id: fundingReceivedId
+            id: fundingReceivedId.toString().includes("temp") ? NO_DATA : fundingReceivedId,
+            tempId: matchingFundingReceived?.tempId
         };
 
         setFundingReceivedForm(nextForm);
