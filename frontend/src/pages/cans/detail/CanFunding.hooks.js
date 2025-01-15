@@ -260,6 +260,10 @@ export default function useCanFunding(
         setEnteredFundingReceived(updatedFundingReceived);
     };
 
+    const cancelFundingReceived = () => {
+        alert("cancel from cancelFundingReceived");
+    };
+
     const handleCancel = () => {
         setShowModal(true);
         setModalProps({
@@ -332,6 +336,7 @@ export default function useCanFunding(
         handleEnteredNotes,
         totalReceived,
         enteredFundingReceived,
-        populateFundingReceivedForm
+        populateFundingReceivedForm,
+        cancelFundingReceived
     };
 }

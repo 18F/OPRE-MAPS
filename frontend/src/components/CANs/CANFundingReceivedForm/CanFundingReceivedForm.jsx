@@ -13,6 +13,7 @@ import icons from "../../../uswds/img/sprite.svg";
  * @property { React.Dispatch<React.SetStateAction<string>>} setReceivedFundingAmount
  * @property {string} notes
  * @property { React.Dispatch<React.SetStateAction<string>>} setNotes
+ * @property { () => void } cancelFundingReceived
  */
 
 /**
@@ -30,7 +31,8 @@ const CANFundingReceivedForm = ({
     receivedFundingAmount,
     setReceivedFundingAmount,
     notes,
-    setNotes
+    setNotes,
+    cancelFundingReceived
 }) => {
     const isFormInValid = !receivedFundingAmount || res.hasErrors("funding-received-amount");
     const fillColor = !isFormInValid ? "#005ea2" : "#757575";
@@ -62,19 +64,30 @@ const CANFundingReceivedForm = ({
                     textAreaStyle={{ height: "51px" }}
                 />{" "}
             </div>
-            <button
-                className="usa-button usa-button--outline margin-top-4"
-                disabled={isFormInValid}
-                data-cy="add-funding-received-btn"
-            >
-                <svg
-                    className="height-2 width-2 margin-right-05 cursor-pointer"
-                    style={{ fill: fillColor }}
+            <div className={"display-flex flex-justify"}>
+                <button
+                    className="usa-button usa-button--unstyled margin-top-2 margin-right-2"
+                    onClick={cancelFundingReceived}
                 >
-                    <use xlinkHref={`${icons}#add`}></use>
-                </svg>
-                {isEditing ? "Edit Funding Received" : "Add Funding Received"}
-            </button>
+                    Cancel
+                </button>
+                <button
+                    className="usa-button usa-button--outline margin-top-4"
+                    disabled={isFormInValid}
+                    data-cy="add-funding-received-btn"
+                >
+                    {!isEditing && (
+                        <svg
+                            className="height-2 width-2 margin-right-05 cursor-pointer"
+                            style={{ fill: fillColor }}
+                        >
+                            <use xlinkHref={`${icons}#add`}></use>
+                        </svg>
+                    )}
+
+                    {isEditing ? "Update Funding Received" : "Add Funding Received"}
+                </button>
+            </div>
         </form>
     );
 };

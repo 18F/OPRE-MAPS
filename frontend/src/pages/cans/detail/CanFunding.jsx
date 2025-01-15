@@ -76,7 +76,8 @@ const CanFunding = ({
         handleEnteredNotes,
         totalReceived,
         enteredFundingReceived,
-        populateFundingReceivedForm
+        populateFundingReceivedForm,
+        cancelFundingReceived
     } = useCanFunding(
         canId,
         canNumber,
@@ -225,6 +226,7 @@ const CanFunding = ({
                                     cn={cn}
                                     res={res}
                                     runValidate={runValidate}
+                                    cancelFundingReceived={cancelFundingReceived}
                                 />
                             </div>
                             <ReceivedFundingCard
