@@ -81,12 +81,15 @@ const CANFundingReceivedForm = ({
 
                     {isEditing ? "Update Funding Received" : "Add Funding Received"}
                 </button>
-                <button
-                    className="usa-button usa-button--unstyled  margin-right-7"
-                    onClick={cancelFundingReceived}
-                >
-                    Cancel
-                </button>
+
+                {isEditing && (
+                    <button
+                        className="usa-button usa-button--unstyled  margin-right-7"
+                        onClick={cancelFundingReceived}
+                    >
+                        Cancel
+                    </button>
+                )}
             </div>
         </form>
     );

@@ -197,7 +197,8 @@ export default function useCanFunding(
         // Update total received first using the functional update pattern
 
         // update the table data
-        const newFundingReceived = {
+        const isRealId = fundingReceivedForm.id && fundingReceivedForm.id !== NO_DATA;
+        let newFundingReceived = {
             id: fundingReceivedForm.id ?? NO_DATA,
             tempId: fundingReceivedForm.tempId ?? `temp-${cryptoRandomString({ length: 3 })}`,
             created_on: new Date().toISOString(),
@@ -208,6 +209,9 @@ export default function useCanFunding(
             funding: +fundingReceivedForm.enteredAmount,
             fiscal_year: fiscalYear
         };
+        if (isRealId) {
+            delete newFundingReceived.tempId;
+        }
 
         // Check if we are editing an existing funding received
         if (fundingReceivedForm.isEditing) {
@@ -262,7 +266,8 @@ export default function useCanFunding(
         setEnteredFundingReceived(updatedFundingReceived);
     };
 
-    const cancelFundingReceived = () => {
+    const cancelFundingReceived = (e) => {
+        e.preventDefault();
         setFundingReceivedForm(initialFundingReceivedForm);
     };
 
