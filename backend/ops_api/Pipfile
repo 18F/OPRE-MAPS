@@ -23,7 +23,7 @@ mypy = "==1.14.1"
 psycopg2-binary = "==2.9.10"
 PyYAML = "==6.0.2"
 requests = "==2.32.3"
-sqlalchemy = "==2.0.36"
+sqlalchemy = "==2.0.37"
 sqlalchemy-continuum = "==1.4.2"
 
 [dev-packages]
