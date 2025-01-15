@@ -209,32 +209,7 @@ export default function useCanFunding(
 
         // Check if we are editing an existing funding received
         if (fundingReceivedForm.isEditing) {
-            // Overwrite the existing funding received in enteredFundingReceived with the new data
-            const matchingFundingReceived = enteredFundingReceived.find((fundingEntry) => {
-                if (newFundingReceived.id === NO_DATA) {
-                    //new funding received
-                    return fundingEntry.tempId === newFundingReceived.tempId;
-                }
-                return fundingEntry.id.toString() === newFundingReceived.id.toString(); // TODO: can we update the id type from number to string, then no need to convert?
-            });
-
-            const matchingFundingReceivedFunding = +matchingFundingReceived?.funding || 0;
-            setTotalReceived(
-                (currentTotal) => currentTotal - matchingFundingReceivedFunding + +fundingReceivedForm.enteredAmount
-            );
-
-            const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) => {
-                if (fundingEntry.id.toString() === NO_DATA) {
-                    return fundingEntry.tempId === newFundingReceived.tempId
-                        ? { ...matchingFundingReceived, ...newFundingReceived }
-                        : fundingEntry;
-                } else {
-                    return fundingEntry.id.toString() === newFundingReceived.id.toString()
-                        ? { ...matchingFundingReceived, ...newFundingReceived }
-                        : fundingEntry;
-                }
-            });
-            setEnteredFundingReceived(updatedFundingReceived);
+            editFundingReceived(newFundingReceived);
         } else {
             // Add the new funding received
             setTotalReceived((currentTotal) => currentTotal + +fundingReceivedForm.enteredAmount);
@@ -254,6 +229,35 @@ export default function useCanFunding(
             tempId: null
         };
         setFundingReceivedForm(nextForm);
+    };
+
+    const editFundingReceived = (newFundingReceived) => {
+        // Overwrite the existing funding received in enteredFundingReceived with the new data
+        const matchingFundingReceived = enteredFundingReceived.find((fundingEntry) => {
+            if (newFundingReceived.id === NO_DATA) {
+                //new funding received
+                return fundingEntry.tempId === newFundingReceived.tempId;
+            }
+            return fundingEntry.id.toString() === newFundingReceived.id.toString(); // TODO: can we update the id type from number to string, then no need to convert?
+        });
+
+        const matchingFundingReceivedFunding = +matchingFundingReceived?.funding || 0;
+        setTotalReceived(
+            (currentTotal) => currentTotal - matchingFundingReceivedFunding + +fundingReceivedForm.enteredAmount
+        );
+
+        const updatedFundingReceived = enteredFundingReceived.map((fundingEntry) => {
+            if (fundingEntry.id.toString() === NO_DATA) {
+                return fundingEntry.tempId === newFundingReceived.tempId
+                    ? { ...matchingFundingReceived, ...newFundingReceived }
+                    : fundingEntry;
+            } else {
+                return fundingEntry.id.toString() === newFundingReceived.id.toString()
+                    ? { ...matchingFundingReceived, ...newFundingReceived }
+                    : fundingEntry;
+            }
+        });
+        setEnteredFundingReceived(updatedFundingReceived);
     };
 
     const handleCancel = () => {
